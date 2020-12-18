@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CombineCoin</title>
+    <link rel="stylesheet" href="/build/tailwind.css">
+    <!-- put these into the <head> of your HTML -->
+    <link href="./dist/toasty.min.css" rel="stylesheet">
+    <!-- <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet"> -->
+</head>
+
+<body class=" bg-gray-100 ">
+    <nav class="bg-white px-8 pt-2 shadow-md">
+        <div class="-mb-px flex justify-center">
+            <a class="no-underline text-teal-dark border-b-2 border-teal-dark uppercase tracking-wide font-bold text-xs py-3 mr-8"
+                href="index.html">
+                Home
+            </a>
+            <a class="no-underline text-red-700 border-b-2 border-transparent uppercase tracking-wide font-bold text-xs py-3 mr-8"
+                onclick="logOut()">
+                Log Out
+            </a>
+        </div>
+    </nav>
+    <!-- component -->
+    <div class="container mt-12 flex mx-auto w-full items-center justify-center">
+
+        <ul class="flex flex-col bg-gray-300 p-8 lg:rounded-md">
+            <li class="border-gray-400 flex flex-row mb-3">
+                <div onclick="sendMoney()"
+                    class="select-none cursor-pointer bg-gray-200 rounded-md flex flex-1 items-center p-4  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="flex flex-col rounded-md w-10 h-10 bg-gray-300 justify-center items-center mr-4">↗️
+                    </div>
+                    <div class="flex-1 pl-1 mr-16">
+                        <div class="font-medium">Send</div>
+                        <div class="text-gray-600 text-sm">Pay for services or family & friends with C₵.</div>
+                    </div>
+                    <!-- <div class="text-gray-600 text-xs"></div> -->
+                </div>
+            </li>
+            <li class="border-gray-400 flex flex-row mb-3">
+                <div onclick="requestMoney()"
+                    class="select-none cursor-pointer bg-gray-200 rounded-md flex flex-1 items-center p-4  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="flex flex-col rounded-md w-10 h-10 bg-gray-300 justify-center items-center mr-4">↙️
+                    </div>
+                    <div class="flex-1 pl-1 mr-16">
+                        <div class="font-medium">Request</div>
+                        <div class="text-gray-600 text-sm">Get that money!</div>
+                    </div>
+                    <!-- <div class="text-gray-600 text-xs"></div> -->
+                </div>
+            </li>
+            <li class="border-gray-400 flex flex-row mb-3">
+                <div onclick="redirectTo('activity.html')"
+                    class="select-none cursor-pointer bg-gray-200 rounded-md flex flex-1 items-center p-4  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="flex flex-col rounded-md w-10 h-10 bg-gray-300 justify-center items-center mr-4">💳
+                    </div>
+                    <div class="flex-1 pl-1 mr-16">
+                        <div class="font-medium">Activity</div>
+                        <div class="text-gray-600 text-sm">Take a look at what you've been doing</div>
+                    </div>
+                    <!-- <div class="text-gray-600 text-xs"></div> -->
+                </div>
+            </li>
+            <li class="border-gray-400 flex flex-row mb-3">
+                <div onclick="balanceCheck()"
+                    class="select-none cursor-pointer bg-gray-200 rounded-md flex flex-1 items-center p-4  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="flex flex-col rounded-md w-10 h-10 bg-gray-300 justify-center items-center mr-4">💰
+                    </div>
+                    <div class="flex-1 pl-1 mr-16">
+                        <div class="font-medium">Balance</div>
+                        <div class="text-gray-600 text-sm">What's your balance looking like?</div>
+                    </div>
+                    <!-- <div class="text-gray-600 text-xs"></div> -->
+                </div>
+            </li>
+        </ul>
+
+    </div>
+    <div style="position: absolute; bottom: 0" class="inline-flex w-full">
+        <button onclick="sendMoney()" class="bg-green-500 hover:bg-indigo-400 text-white text-lg  py-2 px-4 w-1/2">
+            SEND &nbsp;
+        </button>
+        <button onclick="requestMoney()" class="bg-blue-600 hover:bg-indigo-900 text-white text-lg py-2 px-4 w-1/2">
+            REQUEST &nbsp;
+        </button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-analytics.js"></script> -->
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-firestore.js"></script>
+
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
+    </script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyA6e45jNUqrMamW1_JtURpE7kye-sf3Bmw",
+            authDomain: "crumbly-url-shortener.firebaseapp.com",
+            databaseURL: "https://crumbly-url-shortener.firebaseio.com",
+            projectId: "crumbly-url-shortener",
+            storageBucket: "crumbly-url-shortener.appspot.com",
+            messagingSenderId: "286463172863",
+            appId: "1:286463172863:web:beff5e84c62b3b24c42cca",
+            measurementId: "G-0Q071XYMCP"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<title>-</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+<style>
+body, html {
+  height: 100%;
+  font-family: "Inconsolata", sans-serif;
+  font-size: 30px;
+}
+
+.bgimg {
+  background-position: center;
+  background-size: cover;
+  min-height: 75%;
+}
+
+.menu {
+  display: none;
+}
+
+
+.w3-large {
+    font-size: 24px!important;
+}
+
+
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   padding:0px; 
+   background-color: #999;
+   color: white;
+   text-align: center;
+   z-index:100000;
+}
+
+
+#home{ display: none; }
+
+
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 15% 60% 25%;
+  /*background-color: #2196F3;*/
+  padding: 10px;
+  padding-bottom: 100px;
+}
+
+.grid-item {
+  /*background-color: rgba(255, 255, 255, 0.8);*/
+  border: 0px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  padding-bottom: 60px;
+  font-size: 30px;
+  text-align: right;
+}
+
+.flush-left{
+  text-align:left;
+}
+
+.send{
+  background-color: #00FF00;
+  border-radius: 8px;
+  padding:0px 20px 0px 20px; 
+
+}
+
+
+.submit{
+  border: 1px solid #666;
+  padding:20px;
+  font-size:20px;
+}
+</style>
+
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+$(document).ready(function(){
+        $("#topmenu").load("topmenu.htm");
+});
+</script>
+
+
+<body>
+
+
+
+<div style="height: 30px;"></div>
+
+<div class="footer">
+
+  <a href="dialpad.htm">
+  <p style="margin:0px; width: 50%; float: left;" class="submit">REQUEST</p></a>
+
+  <a href="dialpad.htm">
+  <p style="margin:0px; width: 50%; float: left;" class="submit">SEND</p>
+  </a>
+
+</div>
+
+
+
+<div id="topmenu"></div>
+
+
+
+<div class="w3-sand w3-grayscale w3-large">
+
+
+
+
+<div style="padding:50px; padding-bottom: 0px; padding-top:75px;">
+<center>Available Balance</center>
+</div>
+
+
+
+
+
+<center style="font-size: 100px;">
+<span style="font-size: 65%;">C₵</span>750
+</center>
+
+
+    
+    
+    
+<div style="padding:50px; padding-bottom: 0px; padding-top:75px;">
+<center><B>Upcoming</B>
+<BR><BR>
+¢250.00 community credit<BR>
+expected to arrive in the<BR>
+first week of October 2020<BR>
+</center>
+</div>
+ 
+
+
+
+
+
+
+<!-- End page content -->
+</div>
+
+
+
+<script>
+// Tabbed Menu
+function openMenu(evt, menuName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("menu");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-dark-grey", "");
+  }
+  document.getElementById(menuName).style.display = "block";
+  evt.currentTarget.firstElementChild.className += " w3-dark-grey";
+}
+document.getElementById("myLink").click();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CombineCoin</title>
+    <link rel="stylesheet" href="/build/tailwind.css">
+    <link rel="stylesheet" href="https://sharepro.cloud/combinecoin/css/style.css">
+    <!-- <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet"> -->
+    
+
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+</head>
+
+<body class=" bg-gray-100 ">
+    <div id="app" class="flex flex-col items-center">
+        <nav class="bg-white px-8 pt-2 shadow-md">
+            <div class="-mb-px flex justify-center">
+                <a class="no-underline text-teal-500 border-b-2 border-teal-dark uppercase tracking-wide font-bold text-xs py-3 mr-8"
+                    href="#">
+                    Activity
+                </a>
+                <a class="no-underline text-teal-dark border-b-2 border-teal-dark uppercase tracking-wide font-bold text-xs py-3 mr-8"
+                    href="index.html">
+                    Home
+                </a>
+                <a class="no-underline text-red-700 border-b-2 border-transparent uppercase tracking-wide font-bold text-xs py-3 mr-8"
+                    v-on:click="logout()">
+                    Log Out
+                </a>
+            </div>
+        </nav>
+        <div class="w-full md:w-1/2 flex flex-col items-center h-64">
+            <div class="w-full px-4">
+                <div class="flex flex-col items-center relative">
+                    <div class="w-full">
+                        <div class="my-2 p-1 bg-white flex border border-gray-200 rounded">
+                            <div class="flex flex-auto flex-wrap"></div>
+                            <input placeholder="Search through transactions"
+                                class="p-1 px-2 appearance-none outline-none w-full text-gray-800">
+                            <div class="text-gray-300 w-8 py-1 pl-2 pr-1 border-l flex items-center border-gray-200">
+                                <button class="cursor-pointer w-6 h-6 text-gray-600 outline-none focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-chevron-up w-4 h-4">
+                                        <polyline points="18 15 12 9 6 15"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        v-if="transactions?.length > 0"
+                        class="absolute shadow bg-white top-100 z-40 w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj">
+                        <div class="flex flex-col w-full">
+                            <div v-for="t in transactions" :key="t.transactionId"
+                                class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100">
+                                <div
+                                    class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
+                                    <div class="w-6 flex flex-col items-center">
+                                        <div
+                                            class="flex relative w-5 h-5 bg-grey-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full ">
+                                            <img class="rounded-full" alt="A" src="./avatar.png"> </div>
+                                    </div>
+                                    <div class="w-full items-center flex">
+                                        <div class="mx-2 -mt-1  ">
+                                            <span v-if="t?.type === 'payout'">{{t?.receiverUserName}}</span>
+                                            <span
+                                                v-if="t?.type === 'request' && t?.receiverId === userObject.userId">{{t?.senderUserName}}</span>
+                                            <span
+                                                v-if="t?.type === 'request' && t?.receiverId !== userObject.userId">{{t?.receiverUserName}}</span>
+                                            <div
+                                                class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">
+                                                {{t?.description}}</div>
+                                        </div>
+                                        <div class="w-1/2 flex">
+                                            <div
+                                                class="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-teal-700 bg-teal-100 border border-teal-300 ">
+                                                <div class="text-md font-normal leading-none max-w-full flex-initial">
+                                                    C₵ {{t?.amount}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="w-1/2 flex">
+                                            <button
+                                                v-on:click="send($event, t?.senderId, t?.receiverId, t?.amount, t?.transactionId)"
+                                                v-if="t?.type === 'request' && t?.receiverId !== userObject.userId && t?.completed === false"
+                                                class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-4 border border-blue-500 hover:border-transparent rounded">
+                                                Send
+                                            </button>
+                                            <button
+                                                v-if="t?.type === 'request' && t?.receiverId === userObject.userId && t?.completed === false"
+                                                class="bg-yellow-600 text-white font-semibold hover:text-white py-1 px-4 hover:border-transparent rounded">
+                                                Pending
+                                            </button>
+                                            <button
+                                                v-if="t?.type === 'payout' && t?.receiverId !== userObject.userId && t?.completed === true"
+                                                class="bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-1 px-4 border border-green-600 hover:border-transparent rounded">
+                                                Sent!
+                                            </button>
+                                            <button
+                                                v-if="t?.type === 'payout' && t?.receiverId === userObject.userId && t?.completed === true"
+                                                class="bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-1 px-4 border border-green-600 hover:border-transparent rounded">
+                                                Received!
+                                            </button>
+                                            <button
+                                                v-if="t?.type === 'request' && t?.receiverId === userObject.userId && t?.completed === true"
+                                                class="bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-1 px-4 border border-green-600 hover:border-transparent rounded">
+                                                Received!
+                                            </button>
+                                            <button
+                                                v-if="t?.type === 'request' && t?.receiverId !== userObject.userId && t?.completed === true"
+                                                class="bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-1 px-4 border border-green-600 hover:border-transparent rounded">
+                                                Sent!
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-analytics.js"></script> -->
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-firestore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
+    </script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyA6e45jNUqrMamW1_JtURpE7kye-sf3Bmw",
+            authDomain: "crumbly-url-shortener.firebaseapp.com",
+            databaseURL: "https://crumbly-url-shortener.firebaseio.com",
+            projectId: "crumbly-url-shortener",
+            storageBucket: "crumbly-url-shortener.appspot.com",
+            messagingSenderId: "286463172863",
+            appId: "1:286463172863:web:beff5e84c62b3b24c42cca",
+            measurementId: "G-0Q071XYMCP"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="js/activity.js"> </script>
+</body>
+
+</html>

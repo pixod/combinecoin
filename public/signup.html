@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up!</title>
+    <link rel="stylesheet" href="/build/tailwind.css">
+    <!-- <link href="./dist/toasty.min.css" rel="stylesheet"> -->
+
+</head>
+
+<body class="bg-gray-100">
+    <!-- component -->
+    <div class="my-10 lg:w-1/2 sm:w-9/12 container mx-auto bg-white p-8 shadow-xl rounded-lg">
+        <form class="" id="signupForm">
+            <h1 class="text-gray-900 text-5xl text-center my-4"> Create an Account</h1>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="grid-first-name">
+                        First Name
+                    </label>
+                    <input
+                        class="fname appearance-none block w-full bg-gray-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        id="grid-first-name" type="text" placeholder="Jane">
+                    <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                    <label class=" block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="grid-last-name">
+                        Last Name
+                    </label>
+                    <input
+                        class="lname appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="grid-last-name" type="text" placeholder="Doe">
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-user">
+                        Username
+                    </label>
+                    <input
+                        class="username appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="grid-user" type="text" placeholder="davidstacks247">
+                    <p class="text-gray-600 text-xs italic">Make it Unique!</p>
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-email">
+                        Email
+                    </label>
+                    <input
+                        class="email appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="grid-email" inputmode="email" type="email" placeholder="dave@gmail.com">
+                    <p class="text-gray-600 text-xs italic">Don't forget the @ sign!</p>
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="grid-password">
+                        Password
+                    </label>
+                    <input
+                        class="pwd appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="grid-password" type="password" placeholder="******************">
+                    <p class="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
+                </div>
+            </div>
+            <div class="container mx-auto flex flex-wrap flex-auto">
+                <button
+                    class="signup-btn mx-auto text-center text-sm mt-4 bg-indigo-500 font-semibold uppercase tracking-wider text-white px-8 py-2 rounded-lg">
+                    Sign Up!
+                </button>
+            </div>
+            <div class="flex flex-wrap -mx-3 mt-4 mb-6">
+                <div class="w-full px-3 text-center">
+                    <p class="text-gray-600 text-md">or <a href="login.html" class="text-indigo-400"> Log In</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-analytics.js"></script> -->
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-firestore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
+    </script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+             apiKey: "AIzaSyA6e45jNUqrMamW1_JtURpE7kye-sf3Bmw",
+    authDomain: "crumbly-url-shortener.firebaseapp.com",
+    databaseURL: "https://crumbly-url-shortener.firebaseio.com",
+    projectId: "crumbly-url-shortener",
+    storageBucket: "crumbly-url-shortener.appspot.com",
+    messagingSenderId: "286463172863",
+    appId: "1:286463172863:web:beff5e84c62b3b24c42cca",
+    measurementId: "G-0Q071XYMCP"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="/js/signup.js"></script>
+</body>
+
+
+
+</html>
